@@ -6,59 +6,59 @@
   <title>Hairdo Form - Dropdown & Expandable Add-on</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; background: #f6f1ec; color: #2b2b2b; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #08110d; color: #e8d9b5; }
     .wrap { max-width: 860px; margin: 28px auto; padding: 18px; }
-    .card { background: #fff; border-radius: 24px; padding: 28px; box-shadow: 0 14px 40px rgba(0,0,0,.08); }
+    .card { background: #101a15; border-radius: 24px; padding: 28px; box-shadow: 0 14px 40px rgba(0,0,0,.45); border:1px solid #c8a96b; }
     h1 { margin: 0 0 8px; font-size: 28px; }
     h2 { margin: 30px 0 14px; font-size: 18px; }
     p { color: #666; line-height: 1.5; }
     label { display: block; margin: 13px 0 6px; font-weight: 700; font-size: 14px; }
     input, textarea, select {
-      width: 100%; border: 1px solid #ddd5cc; border-radius: 14px;
-      padding: 12px 13px; font-size: 15px; background: #fff;
+      width: 100%; border: 1px solid #c8a96b; border-radius: 14px;
+      padding: 12px 13px; font-size: 15px; background: #16231d; color:#f1e4c5;
     }
     textarea { min-height: 86px; resize: vertical; }
     .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
     .service-preview {
-      margin-top: 12px; padding: 14px; background: #fbf7f2;
-      border: 1px solid #eadfd4; border-radius: 16px;
+      margin-top: 12px; padding: 14px; background: #16231d;
+      border: 1px solid #c8a96b; border-radius: 16px;
     }
     details {
-      border: 1px solid #e6dfd6; border-radius: 18px; margin-bottom: 12px;
-      background: #fff; overflow: hidden;
+      border: 1px solid #c8a96b; border-radius: 18px; margin-bottom: 12px;
+      background: #101a15; overflow: hidden;
     }
     summary {
       cursor: pointer; list-style: none; padding: 16px; font-weight: 800;
       display: flex; justify-content: space-between; gap: 14px; align-items: center;
     }
     summary::-webkit-details-marker { display: none; }
-    summary::after { content: "+"; font-size: 22px; color: #777; }
+    summary::after { content: "+"; font-size: 22px; color: #d1bc8a; }
     details[open] summary::after { content: "–"; }
     .addon-content { padding: 0 16px 16px; border-top: 1px solid #eee7df; }
     .addon-row { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; }
     .addon-row input[type="checkbox"] { width: auto; margin-top: 3px; }
     .addon-name { font-weight: 700; }
-    .addon-desc { color: #777; font-size: 13px; line-height: 1.45; margin-top: 3px; }
+    .addon-desc { color: #d1bc8a; font-size: 13px; line-height: 1.45; margin-top: 3px; }
     .addon-price { margin-left: auto; white-space: nowrap; font-weight: 700; }
     .nested {
-      margin: 12px 0 0 28px; padding: 12px; background: #faf7f3;
-      border-radius: 14px; border: 1px dashed #dfd3c6;
+      margin: 12px 0 0 28px; padding: 12px; background: #16231d;
+      border-radius: 14px; border: 1px dashed #c8a96b;
     }
     .hidden { display: none; }
     .pill {
       display: inline-block; font-size: 12px; padding: 4px 8px;
-      border-radius: 999px; background: #eee6dd; color: #6b5139;
+      border-radius: 999px; background: #223328; color: #e1c27a;
       margin-left: 6px; font-weight: 700;
     }
-    .included { background: #f8f8f8; border-radius: 18px; padding: 14px 18px; border: 1px solid #e8e8e8; }
+    .included { background: #16231d; border-radius: 18px; padding: 14px 18px; border: 1px solid #c8a96b; }
     .included ul { margin: 8px 0 0 18px; padding: 0; }
     .note {
-      background: #fff8ef; border: 1px solid #f1d6ad;
+      background: #1b241d; border: 1px solid #c8a96b;
       padding: 12px 14px; border-radius: 14px; font-size: 14px;
       color: #6b4a1d; margin-top: 10px;
     }
     .summary {
-      margin-top: 26px; background: #202020; color: #fff;
+      margin-top: 26px; background: #0b1511; color: #f1e4c5; border:1px solid #c8a96b;
       border-radius: 22px; padding: 20px; position: sticky; bottom: 12px;
     }
     .summary h2 { margin-top: 0; color: #fff; }
@@ -67,7 +67,7 @@
     .total { border-top: 1px solid rgba(255,255,255,.22); padding-top: 14px; margin-top: 14px; font-size: 20px; font-weight: 800; }
     .btn {
       width: 100%; border: 0; border-radius: 16px; padding: 15px;
-      margin-top: 18px; background: #111; color: #fff; font-size: 16px;
+      margin-top: 18px; background: linear-gradient(135deg,#b89455,#d8bf84); color: #08110d; font-size: 16px;
       cursor: pointer; font-weight: 800;
     }
     pre { white-space: pre-wrap; background: #f4f4f4; border-radius: 16px; padding: 16px; overflow: auto; font-size: 13px; }
