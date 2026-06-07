@@ -5,8 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hairdo Form - Dropdown & Expandable Add-on</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Styling tambahan khusus untuk penempatan logo di pojok kiri atas */
+    .top-left-logo {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 60px; /* Ukuran logo disesuaikan agar proporsional */
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.1s ease; /* Transisi halus saat bergerak */
+      z-index: 1000;
+    }
+
+    /* Styling tambahan untuk penempatan walogo di pojok kanan atas */
+    .top-right-logo {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 60px; /* Ukuran logo disesuaikan agar proporsional */
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.1s ease; /* Transisi halus saat bergerak */
+      z-index: 1000;
+    }
+  </style>
 </head>
 <body>
+
+<img src="logo.png" alt="Logo" class="top-left-logo" id="brandLogo">
+<img src="walogo.png" alt="WhatsApp Logo" class="top-right-logo" id="waLogo">
+
 <div class="wrap">
   <div class="card">
     <h1>Hairdo Booking Inquiry</h1>
@@ -90,5 +119,30 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+  const brandLogo = document.getElementById('brandLogo');
+  const waLogo = document.getElementById('waLogo');
+  
+  brandLogo.addEventListener('click', () => {
+    // Menggerakkan logo ke bawah 8px dari posisi semula
+    brandLogo.style.transform = 'translateY(8px)';
+    
+    // Mengembalikan logo ke posisi semula setelah 150 milidetik (sekejap)
+    setTimeout(() => {
+      brandLogo.style.transform = 'translateY(0)';
+    }, 150);
+  });
+
+  waLogo.addEventListener('click', () => {
+    // Menggerakkan wa logo ke bawah 8px dari posisi semula
+    waLogo.style.transform = 'translateY(8px)';
+    
+    // Mengembalikan wa logo ke posisi semula setelah 150 milidetik (sekejap)
+    setTimeout(() => {
+      waLogo.style.transform = 'translateY(0)';
+    }, 150);
+  });
+</script>
 </body>
 </html>
