@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hairdo Form - Dropdown & Expandable Add-on</title>
+  <!-- Added html2canvas for receipt downloading feature -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     * { box-sizing: border-box; }
     
@@ -230,6 +232,8 @@
       padding: 15px;
       transition: opacity 0.3s ease;
     }
+    
+    /* Modified structure for long-page scroll capture safety */
     .receipt-card {
       background: #051412;
       border: 2px solid #c8a96b;
@@ -238,6 +242,8 @@
       width: 100%;
       max-width: 550px;
       box-shadow: 0 14px 40px rgba(0, 255, 204, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
     }
     .receipt-header {
       text-align: center;
@@ -384,8 +390,9 @@
   </div>
 </div>
 
+<!-- Receipt Modal View Setup below the containers -->
 <div id="receiptModal" class="modal-overlay hidden">
-  <div class="receipt-card">
+  <div class="receipt-card" id="receiptCaptureTarget">
     <div class="receipt-header">
       <h3>STRUK ESTIMASI BOOKING</h3>
       <p>Hairdo By.Ekkles</p>
@@ -403,19 +410,22 @@
       <hr class="receipt-divider">
       <div class="receipt-row total-row"><span>Total Estimasi:</span><span id="rTotal"></span></div>
       <div class="receipt-row dp-row"><span>Minimal DP (50%):</span><span id="rDp"></span></div>
-      <div class="receipt-row"><span>Pilihan Pembayaran:</span>
-      <span>
-        <select id="paymentOption" style="background:#051412;color:#fff;border:1px solid #c8a96b;border-radius:8px;padding:4px;">
-          <option value="dp">DP 50%</option>
-          <option value="full">Lunas</option>
+      
+      <!-- New Payment Scheme Options Area -->
+      <hr class="receipt-divider">
+      <div style="margin-top: 12px;">
+        <label style="color:#c8a96b; margin-bottom:8px;">Opsi Pembayaran</label>
+        <select id="paymentOption" style="background: #030e0c; color: #fff; border: 1px solid #c8a96b;">
+          <option value="dp">Uang Muka / Down Payment (50%)</option>
+          <option value="full">Bayar Lunas / Paid in Full</option>
         </select>
-      </span></div>
+      </div>
     </div>
     <div class="receipt-footer">
-      ⚠️ Simpan struk booking sebagai bukti rincian booking Anda.
+      ⚠️ Silakan simpan struk ini sebagai rincian sah pendaftaran data hairdo Anda!
     </div>
-    <button type="button" class="btn-close-modal" id="saveReceiptBtn" style="margin-bottom:10px;">SIMPAN RECEIPT BOOKING</button>
-    <button type="button" class="btn-close-modal" id="closeReceiptBtn">Tutup Struk</button>
+    <!-- Transformed to Save Receipt Trigger Action Button -->
+    <button type="button" class="btn-close-modal" id="closeReceiptBtn">Save Receipt</button>
   </div>
 </div>
 
@@ -906,7 +916,6 @@ document.getElementById("bookingForm").addEventListener("submit", async (e) => {
       successBox.scrollIntoView({ behavior: "smooth" });
       
       // 5. PENGECEKAN STATUS DP DARI SHEET RESPOND
-      // Jika isAvailable bernilai false (berarti tanggal tersebut sudah ada yang bayar DP)
       if (resData.isAvailable === false) {
         alert("Maaf, tanggal tersebut sudah di-booking penuh dan dikonfirmasi DP oleh client lain.");
       } else {
@@ -962,30 +971,33 @@ document.getElementById("waLogo").addEventListener("click", function() {
   }, 120);
 });
 
-// Event click untuk menutup jendela struk modal
+// Capture and Save Receipt script execution handling scrolling sizes
 document.getElementById("closeReceiptBtn").addEventListener("click", () => {
-  document.getElementById("receiptModal").classList.add("hidden");
-});
-
-
-document.getElementById("saveReceiptBtn")?.addEventListener("click", async ()=>{
-  if(typeof html2canvas === "undefined"){
-    alert("Fitur simpan membutuhkan html2canvas.");
-    return;
-  }
-  const card = document.querySelector(".receipt-card");
-  const canvas = await html2canvas(card);
-  const link = document.createElement("a");
-  link.download = "Receipt-Booking-ByEkkles.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
+  const target = document.getElementById("receiptCaptureTarget");
+  
+  // Uses html2canvas to record structural layout components flawlessly 
+  html2canvas(target, {
+    backgroundColor: "#051412",
+    logging: false,
+    useCORS: true,
+    scale: 2 // High quality clarity scaling
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `Receipt-Hairdo-${Date.now()}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    // Smoothly close the modal layout context frame afterwards
+    document.getElementById("receiptModal").classList.add("hidden");
+  }).catch(err => {
+    console.error("Failed capturing receipt file extension stream:", err);
+    document.getElementById("receiptModal").classList.add("hidden");
+  });
 });
 
 initServiceDropdown();
-
 initDateTimeConstraints();
 updateSummary();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
