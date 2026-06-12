@@ -403,10 +403,18 @@
       <hr class="receipt-divider">
       <div class="receipt-row total-row"><span>Total Estimasi:</span><span id="rTotal"></span></div>
       <div class="receipt-row dp-row"><span>Minimal DP (50%):</span><span id="rDp"></span></div>
+      <div class="receipt-row"><span>Pilihan Pembayaran:</span>
+      <span>
+        <select id="paymentOption" style="background:#051412;color:#fff;border:1px solid #c8a96b;border-radius:8px;padding:4px;">
+          <option value="dp">DP 50%</option>
+          <option value="full">Lunas</option>
+        </select>
+      </span></div>
     </div>
     <div class="receipt-footer">
-      ⚠️ Silakan screenshot atau simpan struk ini sebagai bukti rincian booking Anda!
+      ⚠️ Simpan struk booking sebagai bukti rincian booking Anda.
     </div>
+    <button type="button" class="btn-close-modal" id="saveReceiptBtn" style="margin-bottom:10px;">SIMPAN RECEIPT BOOKING</button>
     <button type="button" class="btn-close-modal" id="closeReceiptBtn">Tutup Struk</button>
   </div>
 </div>
@@ -873,8 +881,8 @@ document.getElementById("bookingForm").addEventListener("submit", async (e) => {
   };
 
   // === MASUKKAN URL DARI GOOGLE APPS SCRIPT DI SINI ===
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbz9jKLvgs-DOX0lYc3ibIRzvpA2l-PLShlLAhK4N_2k_uIC_6cY7wu78ICqrPg3Stg_/exec';
-
+  const scriptURL = ' https://script.google.com/macros/s/AKfycbwgdIpaRQI6Cf4A1jwemVOT7MU5qRRHmwcH-tcPBpRb5_NqTFc5SiI2tP92lwecHoLXcQ/exec'; 
+  
   try {
     // 4. Proses Pengiriman (Fetch API)
     const response = await fetch(scriptURL, {
@@ -959,9 +967,25 @@ document.getElementById("closeReceiptBtn").addEventListener("click", () => {
   document.getElementById("receiptModal").classList.add("hidden");
 });
 
+
+document.getElementById("saveReceiptBtn")?.addEventListener("click", async ()=>{
+  if(typeof html2canvas === "undefined"){
+    alert("Fitur simpan membutuhkan html2canvas.");
+    return;
+  }
+  const card = document.querySelector(".receipt-card");
+  const canvas = await html2canvas(card);
+  const link = document.createElement("a");
+  link.download = "Receipt-Booking-ByEkkles.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+});
+
 initServiceDropdown();
+
 initDateTimeConstraints();
 updateSummary();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
