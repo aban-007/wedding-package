@@ -233,7 +233,7 @@
       transition: opacity 0.3s ease;
     }
     
-    /* Modified structure for long-page scroll capture safety */
+    /* Updated receipt container for better responsiveness and capture */
     .receipt-card {
       background: #051412;
       border: 2px solid #c8a96b;
@@ -243,7 +243,8 @@
       max-width: 550px;
       box-shadow: 0 14px 40px rgba(0, 255, 204, 0.2);
       max-height: 90vh;
-      overflow-y: auto;
+      min-height: 300px; /* Ensures minimum size */
+      overflow-y: auto; /* Keeps scrollbar if content exceeds height */
     }
     .receipt-header {
       text-align: center;
