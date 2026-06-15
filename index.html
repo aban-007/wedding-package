@@ -417,6 +417,7 @@
       <div style="margin-top: 12px;">
         <label style="color:#c8a96b; margin-bottom:8px;">Opsi Pembayaran</label>
         <select id="paymentOption" style="background: #030e0c; color: #fff; border: 1px solid #c8a96b;">
+          <option value="">-- Pilih opsi --</option>
           <option value="dp">Uang Muka / Down Payment (50%)</option>
           <option value="full">Bayar Lunas / Paid in Full</option>
         </select>
@@ -431,173 +432,30 @@
 </div>
 
 <script>
+// ... (Services data object remains unchanged)
 const services = {
-  regular: {
-    label: "Regular Occasion",
-    desc: "Graduation / Bridesmaid / Guest Party",
-    price: 300000,
-    included: ["Free aksesoris rambut sesuai ketersediaan", "Tidak termasuk hairclip"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Touch-up During Event", subtitle: "Untuk client yang ingin rambut dicek / dirapikan lagi saat acara.", addons: [
-        { id: "retouch_regular", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan yang hanya muncul jika diperlukan.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  special450: {
-    label: "Sis Wedding / Pageant Finalist",
-    desc: "Special Occasion",
-    price: 450000,
-    included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Touch-up During Event", subtitle: "Untuk acara panjang atau butuh retouch setelah sesi utama.", addons: [
-        { id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  sangjit: {
-    label: "Sangjit / Engagement / Sweet17",
-    desc: "Special Occasion",
-    price: 500000,
-    included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Touch-up During Event", subtitle: "Cocok jika ada pergantian sesi / foto / acara cukup panjang.", addons: [
-        { id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  portfolio: {
-    label: "Portfolio",
-    desc: "Per look",
-    price: 250000,
-    included: ["Harga per look"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan look.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  photoshoot: {
-    label: "Photoshoot",
-    desc: "Self / Family / Prewedding",
-    price: 350000,
-    included: ["Free transport Gading Serpong, Alsut, Karawaci, BSD", "Free aksesoris rambut sesuai ketersediaan"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Standby Photoshoot", subtitle: "Untuk photoshoot yang butuh ganti look atau hairdo dicek selama sesi.", addons: [
-        { id: "standby", label: "Add standby", price: 100000, desc: "Jika standby, jumlah look bebas.", perHour: true }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  bride: {
-    label: "Bride",
-    desc: "D-Day bride hairdo",
-    price: 750000,
-    included: [
-      "Free synthetic hairclip jika dibutuhkan and menjadi hak milik",
-      "Konfirmasi warna hairclip max H-3 minggu sebelum acara",
-      "Free transport radius 20 km",
-      "Free touch-up kit"
-    ],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Retouch / Touch-up", subtitle: "Untuk bride yang ingin ada touch-up tambahan saat acara.", addons: [
-        { id: "retouch_bride_1time", label: "Retouch 1 time", price: 450000, desc: "For dinner events" },
-        { id: "retouch_bride_hourly", label: "Retouch Standby until the event is finished", price: 300000, desc: "Price per hour", autoCalcTime: true }
-      ]},
-      { title: "Trial Session", subtitle: "Trial hanya weekdays. Jika weekend ada tambahan biaya.", addons: [
-        { id: "trial_weekday", label: "Add trial weekdays", price: 400000, desc: "Trial hairdo di hari kerja." },
-        { id: "trial_weekend_fee", label: "Trial di weekend", price: 300000, desc: "Tambahan biaya jika trial dilakukan saat weekend.", requires: "trial_weekday" }
-      ]}
-    ]
-  },
-  mom_engagement: {
-    label: "Mom Engagement / Bday / Anniversary",
-    desc: "Mom hairdo",
-    price: 450000,
-    included: ["Free aksesoris rambut sesuai ketersediaan"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [
-        { id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  },
-  mom_bride: {
-    label: "Mom Bride / Groom D-Day",
-    desc: "Mom wedding day hairdo",
-    price: 500000,
-    included: ["Free aksesoris rambut sesuai ketersediaan"],
-    addonGroups: [
-      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
-        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
-        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
-      ]},
-      { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [
-        { id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }
-      ]},
-      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
-        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
-      ]}
-    ]
-  }
+  regular: { label: "Regular Occasion", desc: "Graduation / Bridesmaid / Guest Party", price: 300000, included: ["Free aksesoris rambut sesuai ketersediaan", "Tidak termasuk hairclip"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Touch-up During Event", subtitle: "Untuk client yang ingin rambut dicek / dirapikan lagi saat acara.", addons: [{ id: "retouch_regular", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }]}, { title: "Special Need", subtitle: "Tambahan yang hanya muncul jika diperlukan.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  special450: { label: "Sis Wedding / Pageant Finalist", desc: "Special Occasion", price: 450000, included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Touch-up During Event", subtitle: "Untuk acara panjang atau butuh retouch setelah sesi utama.", addons: [{ id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  sangjit: { label: "Sangjit / Engagement / Sweet17", desc: "Special Occasion", price: 500000, included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Touch-up During Event", subtitle: "Cocok jika ada pergantian sesi / foto / acara cukup panjang.", addons: [{ id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  portfolio: { label: "Portfolio", desc: "Per look", price: 250000, included: ["Harga per look"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan look.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  photoshoot: { label: "Photoshoot", desc: "Self / Family / Prewedding", price: 350000, included: ["Free transport Gading Serpong, Alsut, Karawaci, BSD", "Free aksesoris rambut sesuai ketersediaan"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Standby Photoshoot", subtitle: "Untuk photoshoot yang butuh ganti look atau hairdo dicek selama sesi.", addons: [{ id: "standby", label: "Add standby", price: 100000, desc: "Jika standby, jumlah look bebas.", perHour: true }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  bride: { label: "Bride", desc: "D-Day bride hairdo", price: 750000, included: ["Free synthetic hairclip jika dibutuhkan and menjadi hak milik", "Konfirmasi warna hairclip max H-3 minggu sebelum acara", "Free transport radius 20 km", "Free touch-up kit"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Retouch / Touch-up", subtitle: "Untuk bride yang ingin ada touch-up tambahan saat acara.", addons: [{ id: "retouch_bride_1time", label: "Retouch 1 time", price: 450000, desc: "For dinner events" }, { id: "retouch_bride_hourly", label: "Retouch Standby until the event is finished", price: 300000, desc: "Price per hour", autoCalcTime: true }]}, { title: "Trial Session", subtitle: "Trial hanya weekdays. Jika weekend ada tambahan biaya.", addons: [{ id: "trial_weekday", label: "Add trial weekdays", price: 400000, desc: "Trial hairdo di hari kerja." }, { id: "trial_weekend_fee", label: "Trial di weekend", price: 300000, desc: "Tambahan biaya jika trial dilakukan saat weekend.", requires: "trial_weekday" }]}]},
+  mom_engagement: { label: "Mom Engagement / Bday / Anniversary", desc: "Mom hairdo", price: 450000, included: ["Free aksesoris rambut sesuai ketersediaan"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [{ id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]},
+  mom_bride: { label: "Mom Bride / Groom D-Day", desc: "Mom wedding day hairdo", price: 500000, included: ["Free aksesoris rambut sesuai ketersediaan"], addonGroups: [{ title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [{ id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true }, { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }]}, { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [{ id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }]}, { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [{ id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }]}]}
 };
 
 let selectedServiceId = "";
 
-const rupiah = (n) => new Intl.NumberFormat("id-ID", {
-  style: "currency", currency: "IDR", maximumFractionDigits: 0
-}).format(n);
+const rupiah = (n) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
 function initServiceDropdown() {
   const select = document.getElementById("serviceSelect");
-
   Object.entries(services).forEach(([id, service]) => {
     const opt = document.createElement("option");
     opt.value = id;
     opt.textContent = `${service.label} - ${service.desc} (${rupiah(service.price)})`;
     select.appendChild(opt);
   });
-
   select.addEventListener("change", () => {
     selectedServiceId = select.value;
     clearAddons();
@@ -610,89 +468,35 @@ function initServiceDropdown() {
 
 function renderServicePreview() {
   const preview = document.getElementById("servicePreview");
-  if (!selectedServiceId) {
-    preview.classList.add("hidden");
-    return;
-  }
+  if (!selectedServiceId) { preview.classList.add("hidden"); return; }
   const service = services[selectedServiceId];
   preview.classList.remove("hidden");
-  preview.innerHTML = `
-    <strong>${service.label}</strong><br>
-    <span style="color:#00d2ff; opacity:0.85;">${service.desc}</span><br>
-    <strong style="color:#00ffcc;">${rupiah(service.price)}</strong>
-  `;
+  preview.innerHTML = `<strong>${service.label}</strong><br><span style="color:#00d2ff; opacity:0.85;">${service.desc}</span><br><strong style="color:#00ffcc;">${rupiah(service.price)}</strong>`;
 }
 
-function clearAddons() {
-  document.getElementById("addonPanel").innerHTML = "";
-}
+function clearAddons() { document.getElementById("addonPanel").innerHTML = ""; }
 
 function renderAddons() {
   const panel = document.getElementById("addonPanel");
   const intro = document.getElementById("addonIntro");
   panel.innerHTML = "";
-
-  if (!selectedServiceId) {
-    intro.textContent = "Pilih service terlebih dahulu.";
-    return;
-  }
-
+  if (!selectedServiceId) { intro.textContent = "Pilih service terlebih dahulu."; return; }
   intro.textContent = "Buka kategori add-on yang dibutuhkan saja.";
   const service = services[selectedServiceId];
-
   service.addonGroups.forEach((group, index) => {
     const details = document.createElement("details");
     if (index === 0) details.open = true;
-
-    details.innerHTML = `
-      <summary><span>${group.title}<span class="pill">Optional</span></span></summary>
-      <div class="addon-content">
-        <p class="addon-desc">${group.subtitle}</p>
-        <div class="addon-list"></div>
-      </div>
-    `;
-
+    details.innerHTML = `<summary><span>${group.title}<span class="pill">Optional</span></span></summary><div class="addon-content"><p class="addon-desc">${group.subtitle}</p><div class="addon-list"></div></div>`;
     const list = details.querySelector(".addon-list");
     group.addons.forEach(addon => {
       const row = document.createElement("div");
       row.className = "addon-row";
       row.dataset.requires = addon.requires || "";
-
-      row.innerHTML = `
-        <input type="checkbox" class="addon-check" id="${addon.id}" data-id="${addon.id}"
-          data-label="${addon.label}" data-price="${addon.price}"
-          data-rental="${addon.rentalPrice || 0}" data-deposit="${addon.depositPrice || 0}"
-          data-ishairclip="${addon.isHairclip ? "yes" : "no"}"
-          data-perhour="${addon.perHour ? "yes" : "no"}"
-          data-autocalc="${addon.autoCalcTime ? "yes" : "no"}" />
-        <div style="flex:1;">
-          <div class="addon-name">${addon.label}</div>
-          <div class="addon-desc">${addon.desc}</div>
-          
-          ${addon.perHour ? `
-            <div class="nested hidden" data-hour-box="${addon.id}">
-              <label>Jumlah jam standby</label>
-              <input type="number" class="hour-input" data-for="${addon.id}" value="1" min="1" />
-            </div>
-          ` : ""}
-
-          ${addon.autoCalcTime ? `
-            <div class="nested hidden" data-time-box="${addon.id}">
-              <div class="two-col" style="margin-top:10px;">
-                <div><label>Event Start Time</label><input type="time" class="start-time" data-for="${addon.id}"></div>
-                <div><label>Event End Time</label><input type="time" class="end-time" data-for="${addon.id}"></div>
-              </div>
-              <div class="note" style="margin-top:10px; font-size:12px;" id="calcNote-${addon.id}">Fill times to calculate hours.</div>
-            </div>
-          ` : ""}
-        </div>
-        <div class="addon-price">${(addon.perHour || addon.autoCalcTime) ? rupiah(addon.price) + " / jam" : "+" + rupiah(addon.price)}</div>
-      `;
+      row.innerHTML = `<input type="checkbox" class="addon-check" id="${addon.id}" data-id="${addon.id}" data-label="${addon.label}" data-price="${addon.price}" data-rental="${addon.rentalPrice || 0}" data-deposit="${addon.depositPrice || 0}" data-ishairclip="${addon.isHairclip ? "yes" : "no"}" data-perhour="${addon.perHour ? "yes" : "no"}" data-autocalc="${addon.autoCalcTime ? "yes" : "no"}" /><div style="flex:1;"><div class="addon-name">${addon.label}</div><div class="addon-desc">${addon.desc}</div>${addon.perHour ? `<div class="nested hidden" data-hour-box="${addon.id}"><label>Jumlah jam standby</label><input type="number" class="hour-input" data-for="${addon.id}" value="1" min="1" /></div>` : ""}${addon.autoCalcTime ? `<div class="nested hidden" data-time-box="${addon.id}"><div class="two-col" style="margin-top:10px;"><div><label>Event Start Time</label><input type="time" class="start-time" data-for="${addon.id}"></div><div><label>Event End Time</label><input type="time" class="end-time" data-for="${addon.id}"></div></div><div class="note" style="margin-top:10px; font-size:12px;" id="calcNote-${addon.id}">Fill times to calculate hours.</div></div>` : ""}</div><div class="addon-price">${(addon.perHour || addon.autoCalcTime) ? rupiah(addon.price) + " / jam" : "+" + rupiah(addon.price)}</div>`;
       list.appendChild(row);
     });
     panel.appendChild(details);
   });
-
   bindAddonEvents();
   applyDependencyVisibility();
 }
@@ -708,10 +512,7 @@ function bindAddonEvents() {
       updateSummary();
     });
   });
-
-  document.querySelectorAll(".hour-input, .start-time, .end-time").forEach(el => {
-    el.addEventListener("input", updateSummary);
-  });
+  document.querySelectorAll(".hour-input, .start-time, .end-time").forEach(el => { el.addEventListener("input", updateSummary); });
 }
 
 function applyDependencyVisibility() {
@@ -721,19 +522,13 @@ function applyDependencyVisibility() {
     const reqInp = document.getElementById(reqId);
     const show = reqInp && reqInp.checked;
     row.classList.toggle("hidden", !show);
-    if (!show) {
-      const cb = row.querySelector(".addon-check");
-      if (cb) cb.checked = false;
-    }
+    if (!show) { const cb = row.querySelector(".addon-check"); if (cb) cb.checked = false; }
   });
 }
 
 function renderIncluded() {
   const box = document.getElementById("includedBox");
-  if (!selectedServiceId) {
-    box.innerHTML = "<p>Pilih service terlebih dahulu.</p>";
-    return;
-  }
+  if (!selectedServiceId) { box.innerHTML = "<p>Pilih service terlebih dahulu.</p>"; return; }
   const items = services[selectedServiceId].included.map(item => `<li>${item}</li>`).join("");
   box.innerHTML = `<strong>Included:</strong><ul>${items}</ul>`;
 }
@@ -743,7 +538,7 @@ function calculateDuration(start, end) {
   const [sH, sM] = start.split(':').map(Number);
   const [eH, eM] = end.split(':').map(Number);
   let diff = (eH * 60 + eM) - (sH * 60 + sM);
-  if (diff < 0) diff += 1440; // Over midnight
+  if (diff < 0) diff += 1440;
   return Math.max(1, Math.ceil(diff / 60));
 }
 
@@ -754,248 +549,97 @@ function updateSummary() {
   box.innerHTML = "";
   autoNotes.innerHTML = "";
   let total = 0;
-
-  if (!selectedServiceId) {
-    box.innerHTML = `<div class="summary-row muted"><span>Belum pilih service</span><span>-</span></div>`;
-    totalText.textContent = rupiah(0);
-    return;
-  }
-
+  if (!selectedServiceId) { box.innerHTML = `<div class="summary-row muted"><span>Belum pilih service</span><span>-</span></div>`; totalText.textContent = rupiah(0); return; }
   const service = services[selectedServiceId];
   total += service.price;
   box.innerHTML += `<div class="summary-row"><span>${service.label}</span><span>${rupiah(service.price)}</span></div>`;
-
-  // Mature Fee
-  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") {
-    total += 50000;
-    box.innerHTML += `<div class="summary-row"><span>Mature fee > 45 tahun</span><span>${rupiah(50000)}</span></div>`;
-    autoNotes.innerHTML += `<div class="note">Mature fee +50k ditambahkan.</div>`;
-  }
-
-  // Addons
+  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") { total += 50000; box.innerHTML += `<div class="summary-row"><span>Mature fee > 45 tahun</span><span>${rupiah(50000)}</span></div>`; autoNotes.innerHTML += `<div class="note">Mature fee +50k ditambahkan.</div>`; }
   document.querySelectorAll(".addon-check:checked").forEach(cb => {
     let qty = 1;
     let price = Number(cb.dataset.price);
-
-    if (cb.dataset.perhour === "yes") {
-      qty = Math.max(1, Number(document.querySelector(`.hour-input[data-for="${cb.dataset.id}"]`).value || 1));
-    } else if (cb.dataset.autocalc === "yes") {
-      const start = document.querySelector(`.start-time[data-for="${cb.dataset.id}"]`).value;
-      const end = document.querySelector(`.end-time[data-for="${cb.dataset.id}"]`).value;
-      qty = calculateDuration(start, end);
-      const noteEl = document.getElementById(`calcNote-${cb.dataset.id}`);
-      if (noteEl) noteEl.textContent = qty > 0 ? `Duration: ${qty} hour(s)` : "Fill times to calculate hours.";
-    }
-
-    if (cb.dataset.ishairclip === "yes") {
-      const rental = Number(cb.dataset.rental);
-      const deposit = Number(cb.dataset.deposit);
-      total += (rental + deposit) * qty;
-      
-      box.innerHTML += `
-        <div class="summary-row">
-          <span>${cb.dataset.label} (Sewa)${qty > 1 ? " x " + qty : ""}</span>
-          <span>${rupiah(rental * qty)}</span>
-        </div>
-        <div class="summary-row">
-          <span>${cb.dataset.label} (Deposit)${qty > 1 ? " x " + qty : ""}</span>
-          <span>${rupiah(deposit * qty)}</span>
-        </div>
-      `;
-    } else {
-      const finalAddonPrice = price * qty;
-      total += finalAddonPrice;
-      box.innerHTML += `
-        <div class="summary-row">
-          <span>${cb.dataset.label}${qty > 1 ? " x " + qty : ""}</span>
-          <span>${rupiah(finalAddonPrice)}</span>
-        </div>
-      `;
-    }
+    if (cb.dataset.perhour === "yes") { qty = Math.max(1, Number(document.querySelector(`.hour-input[data-for="${cb.dataset.id}"]`).value || 1)); } else if (cb.dataset.autocalc === "yes") { const start = document.querySelector(`.start-time[data-for="${cb.dataset.id}"]`).value; const end = document.querySelector(`.end-time[data-for="${cb.dataset.id}"]`).value; qty = calculateDuration(start, end); const noteEl = document.getElementById(`calcNote-${cb.dataset.id}`); if (noteEl) noteEl.textContent = qty > 0 ? `Duration: ${qty} hour(s)` : "Fill times to calculate hours."; }
+    if (cb.dataset.ishairclip === "yes") { const rental = Number(cb.dataset.rental); const deposit = Number(cb.dataset.deposit); total += (rental + deposit) * qty; box.innerHTML += `<div class="summary-row"><span>${cb.dataset.label} (Sewa)${qty > 1 ? " x " + qty : ""}</span><span>${rupiah(rental * qty)}</span></div><div class="summary-row"><span>${cb.dataset.label} (Deposit)${qty > 1 ? " x " + qty : ""}</span><span>${rupiah(deposit * qty)}</span></div>`; } else { const finalAddonPrice = price * qty; total += finalAddonPrice; box.innerHTML += `<div class="summary-row"><span>${cb.dataset.label}${qty > 1 ? " x " + qty : ""}</span><span>${rupiah(finalAddonPrice)}</span></div>`; }
   });
-
-  if (document.getElementById("transportArea").value === "confirm") {
-    box.innerHTML += `<div class="summary-row muted"><span>Transport luar area</span><span>Confirm</span></div>`;
-    autoNotes.innerHTML += `<div class="note">Biaya transport perlu konfirmasi manual.</div>`;
-  }
-
+  if (document.getElementById("transportArea").value === "confirm") { box.innerHTML += `<div class="summary-row muted"><span>Transport luar area</span><span>Confirm</span></div>`; autoNotes.innerHTML += `<div class="note">Biaya transport perlu konfirmasi manual.</div>`; }
   totalText.textContent = rupiah(total);
 }
 
-function initDateTimeConstraints() {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById("eventDate").setAttribute("min", today);
-}
+function initDateTimeConstraints() { const today = new Date().toISOString().split('T')[0]; document.getElementById("eventDate").setAttribute("min", today); }
 
 document.getElementById("age").addEventListener("change", updateSummary);
 document.getElementById("transportArea").addEventListener("change", updateSummary);
 
+// --- AUTOMATIC SCREENSHOT LOGIC ---
+document.getElementById("paymentOption").addEventListener("change", function() {
+  if (this.value) {
+    const btn = document.getElementById("closeReceiptBtn");
+    btn.classList.add("hidden"); // Remove label
+    
+    const target = document.getElementById("receiptCaptureTarget");
+    html2canvas(target, { backgroundColor: "#051412", logging: false, useCORS: true, scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `Receipt-Hairdo-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      btn.classList.remove("hidden"); // Restore button
+      document.getElementById("receiptModal").classList.add("hidden");
+    });
+  }
+});
+
 document.getElementById("bookingForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // 1. Ubah tombol saat loading
   const btnSubmit = document.querySelector('button[type="submit"]');
   const originalBtnText = btnSubmit.textContent;
   btnSubmit.textContent = "MENGIRIM DATA... ⏳";
   btnSubmit.disabled = true;
-
-  // 2. Kalkulasi Ulang Data untuk dikirim ke Sheet
-  let addonNames = [];
-  let totalAddonPrice = 0;
-  let matureFeeVal = 0;
-
-  // Cek Addon
+  let addonNames = [], totalAddonPrice = 0, matureFeeVal = 0;
   document.querySelectorAll(".addon-check:checked").forEach(cb => {
     let qty = 1;
-    if (cb.dataset.perhour === "yes") {
-      qty = Math.max(1, Number(document.querySelector('.hour-input[data-for="'+cb.dataset.id+'"]').value || 1));
-    } else if (cb.dataset.autocalc === "yes") {
-      const start = document.querySelector('.start-time[data-for="'+cb.dataset.id+'"]').value;
-      const end = document.querySelector('.end-time[data-for="'+cb.dataset.id+'"]').value;
-      qty = calculateDuration(start, end);
-    }
-    
-    let labelText = cb.dataset.label + (qty > 1 ? " (x" + qty + ")" : "");
-    addonNames.push(labelText);
-
-    if (cb.dataset.ishairclip === "yes") {
-      totalAddonPrice += (Number(cb.dataset.rental) + Number(cb.dataset.deposit)) * qty;
-    } else {
-      totalAddonPrice += Number(cb.dataset.price) * qty;
-    }
+    if (cb.dataset.perhour === "yes") qty = Math.max(1, Number(document.querySelector('.hour-input[data-for="'+cb.dataset.id+'"]').value || 1)); else if (cb.dataset.autocalc === "yes") qty = calculateDuration(document.querySelector('.start-time[data-for="'+cb.dataset.id+'"]').value, document.querySelector('.end-time[data-for="'+cb.dataset.id+'"]').value);
+    addonNames.push(cb.dataset.label + (qty > 1 ? " (x" + qty + ")" : ""));
+    if (cb.dataset.ishairclip === "yes") totalAddonPrice += (Number(cb.dataset.rental) + Number(cb.dataset.deposit)) * qty; else totalAddonPrice += Number(cb.dataset.price) * qty;
   });
-
-  // Cek Mature Fee
-  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") {
-    matureFeeVal = 50000;
-  }
-
-  // Harga Dasar
-  let servicePriceVal = services[selectedServiceId] ? services[selectedServiceId].price : 0;
-  let totalEstimasiVal = servicePriceVal + totalAddonPrice + matureFeeVal;
-  let minimalDpVal = totalEstimasiVal * 0.5;
-
-  // 3. Susun data menjadi JSON
+  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") matureFeeVal = 50000;
   const payload = {
     namaClient: document.getElementById("clientName").value,
     whatsapp: document.getElementById("whatsapp").value,
     tanggalAcara: document.getElementById("eventDate").value,
     jamReady: document.getElementById("readyTime").value,
     serviceUtama: services[selectedServiceId] ? services[selectedServiceId].label : "-",
-    biayaService: servicePriceVal,
+    biayaService: services[selectedServiceId] ? services[selectedServiceId].price : 0,
     addonPilihan: addonNames.length > 0 ? addonNames.join(", ") : "-",
     totalBiayaAddon: totalAddonPrice,
     matureFee: matureFeeVal,
     transportCharge: document.getElementById("transportArea").value === "confirm" ? "Confirm" : "Included",
-    totalEstimasi: totalEstimasiVal,
-    minimalDp: minimalDpVal
+    totalEstimasi: (services[selectedServiceId] ? services[selectedServiceId].price : 0) + totalAddonPrice + matureFeeVal,
+    minimalDp: ((services[selectedServiceId] ? services[selectedServiceId].price : 0) + totalAddonPrice + matureFeeVal) * 0.5
   };
-
-  // === MASUKKAN URL DARI GOOGLE APPS SCRIPT DI SINI ===
-  const scriptURL = ' https://script.google.com/macros/s/AKfycbwgdIpaRQI6Cf4A1jwemVOT7MU5qRRHmwcH-tcPBpRb5_NqTFc5SiI2tP92lwecHoLXcQ/exec'; 
-  
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwgdIpaRQI6Cf4A1jwemVOT7MU5qRRHmwcH-tcPBpRb5_NqTFc5SiI2tP92lwecHoLXcQ/exec';
   try {
-    // 4. Proses Pengiriman (Fetch API)
-    const response = await fetch(scriptURL, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    });
-
+    const response = await fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
     if (response.ok) {
-      const responseText = await response.text();
-      let resData = { result: "success" }; // Fallback default
-      try {
-        resData = JSON.parse(responseText);
-      } catch (err) {
-        console.log("Response text is not JSON string.");
-      }
-
-      // Jika berhasil dicatat, munculkan pesan success ✨
-      const successBox = document.getElementById("successMessage");
-      successBox.style.display = "block";
-      successBox.scrollIntoView({ behavior: "smooth" });
-      
-      // 5. PENGECEKAN STATUS DP DARI SHEET RESPOND
-      if (resData.isAvailable === false) {
-        alert("Maaf, tanggal tersebut sudah di-booking penuh dan dikonfirmasi DP oleh client lain.");
-      } else {
-        // Jika belum ada yang bayar DP, Munculkan Struk Tagihan
-        document.getElementById("rClientName").textContent = payload.namaClient;
-        document.getElementById("rWhatsapp").textContent = payload.whatsapp;
-        document.getElementById("rEventDate").textContent = payload.tanggalAcara;
-        document.getElementById("rReadyTime").textContent = payload.jamReady;
-        document.getElementById("rService").textContent = payload.serviceUtama + " (" + rupiah(payload.biayaService) + ")";
-        document.getElementById("rAddons").textContent = payload.addonPilihan;
-        document.getElementById("rMatureFee").textContent = rupiah(payload.matureFee);
-        document.getElementById("rTransport").textContent = payload.transportCharge === "Confirm" ? "Perlu Konfirmasi" : "Termasuk Radius";
-        document.getElementById("rTotal").textContent = rupiah(payload.totalEstimasi);
-        document.getElementById("rDp").textContent = rupiah(payload.minimalDp);
-
-        // Menampilkan jendela Pop-up Struk
-        document.getElementById("receiptModal").classList.remove("hidden");
-      }
-
-      // Mengosongkan form setelah sukses
+      document.getElementById("successMessage").style.display = "block";
+      document.getElementById("rClientName").textContent = payload.namaClient;
+      document.getElementById("rWhatsapp").textContent = payload.whatsapp;
+      document.getElementById("rEventDate").textContent = payload.tanggalAcara;
+      document.getElementById("rReadyTime").textContent = payload.jamReady;
+      document.getElementById("rService").textContent = payload.serviceUtama + " (" + rupiah(payload.biayaService) + ")";
+      document.getElementById("rAddons").textContent = payload.addonPilihan;
+      document.getElementById("rMatureFee").textContent = rupiah(payload.matureFee);
+      document.getElementById("rTransport").textContent = payload.transportCharge === "Confirm" ? "Perlu Konfirmasi" : "Termasuk Radius";
+      document.getElementById("rTotal").textContent = rupiah(payload.totalEstimasi);
+      document.getElementById("rDp").textContent = rupiah(payload.minimalDp);
+      document.getElementById("receiptModal").classList.remove("hidden");
       document.getElementById("bookingForm").reset();
-      updateSummary(); 
-    } else {
-      alert("Terjadi kesalahan saat menghubungi server Google.");
-    }
-  } catch (error) {
-    console.error("Error!", error.message);
-    alert("Gagal mengirim data. Silakan periksa koneksi internet Anda.");
-  } finally {
-    // Kembalikan tombol seperti semula
-    btnSubmit.textContent = originalBtnText;
-    btnSubmit.disabled = false;
-  }
-});
-    
-document.getElementById("topLogo").addEventListener("click", function() {
-  this.style.transform = "translateY(8px)";
-  setTimeout(() => {
-    this.style.transform = "translateY(0)";
-    setTimeout(() => { window.location.href ="https://hairdoby-ekkles.github.io/hairdo/"; }, 120);
-  }, 120);
+      updateSummary();
+    } else alert("Terjadi kesalahan.");
+  } catch (error) { console.error("Error!", error.message); } finally { btnSubmit.textContent = originalBtnText; btnSubmit.disabled = false; }
 });
 
-document.getElementById("waLogo").addEventListener("click", function() {
-  this.style.transform = "translateY(-19px)";
-  setTimeout(() => {
-    this.style.transform = "translateY(0)";
-    setTimeout(() => {
-      const phoneNumber = "6281314798161";
-      const text = "Hello Sis, I have filled out the form and submitted the inquiry";
-      window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-    }, 120);
-  }, 120);
-});
-
-// Capture and Save Receipt script execution handling scrolling sizes
-document.getElementById("closeReceiptBtn").addEventListener("click", () => {
-  const target = document.getElementById("receiptCaptureTarget");
-  
-  // Uses html2canvas to record structural layout components flawlessly 
-  html2canvas(target, {
-    backgroundColor: "#051412",
-    logging: false,
-    useCORS: true,
-    scale: 2 // High quality clarity scaling
-  }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = `Receipt-Hairdo-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    
-    // Smoothly close the modal layout context frame afterwards
-    document.getElementById("receiptModal").classList.add("hidden");
-  }).catch(err => {
-    console.error("Failed capturing receipt file extension stream:", err);
-    document.getElementById("receiptModal").classList.add("hidden");
-  });
-});
-
+document.getElementById("topLogo").addEventListener("click", function() { window.location.href ="https://hairdoby-ekkles.github.io/hairdo/"; });
+document.getElementById("waLogo").addEventListener("click", function() { window.location.href = `https://wa.me/6281314798161?text=Hello%20Sis,%20I%20have%20filled%20out%20the%20form`; });
+document.getElementById("closeReceiptBtn").addEventListener("click", () => document.getElementById("receiptModal").classList.add("hidden"));
 initServiceDropdown();
 initDateTimeConstraints();
 updateSummary();
